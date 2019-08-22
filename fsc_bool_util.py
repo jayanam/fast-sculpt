@@ -76,3 +76,7 @@ def execute_boolean_op(context, target_obj, bool_method = 0):
 
     make_active(target_obj)
     to_sculpt()
+
+    if context.scene.remesh_after_union:
+        bpy.context.object.data.remesh_voxel_size = context.scene.remesh_voxel_size
+        bpy.ops.object.voxel_remesh()

@@ -30,6 +30,17 @@ class FSC_PT_Panel(Panel):
         row = layout.row()
         row.operator('object.fsc_ot_mask_extract', text="Extract Mask")
 
+        row = layout.row()
+        layout.prop(context.scene, "remesh_after_union", text="Remesh after union")
+
+        row = layout.row()
+        layout.prop(context.scene, "remesh_after_extract", text="Remesh after extract")
+
+        row = layout.row()
+        layout.prop(context.scene, "remesh_voxel_size", text="Remesh-size")
+
+        row = layout.row()
+        row.operator('object.fsc_remesh', text="Remesh")
         # row = layout.row()
         # row.prop(context.scene, "center_transform", text="Center transform")
 
