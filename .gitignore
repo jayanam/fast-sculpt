@@ -3,3 +3,5 @@ __pycache__/fsc_bool_op.cpython-37.pyc
 __pycache__/fsc_bool_util.cpython-37.pyc
 __pycache__/fsc_op.cpython-37.pyc
 __pycache__/fsc_panel.cpython-37.pyc
+__pycache__/fsc_mask_op.cpython-37.pyc
+__pycache__/fsc_select_mode_utils.cpython-37.pyc

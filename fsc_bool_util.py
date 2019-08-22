@@ -3,10 +3,12 @@ from bpy.props import *
 
 import bmesh
 
+from . fsc_select_mode_utils import *
+
 def check_cutter_selected(context):
     result = len(context.selected_objects) > 0
     result = result and not bpy.context.scene.target_object is None
-    result = result and not (bpy.context.scene.target_object == bpy.context.scene.objects.active)
+    result = result and not (bpy.context.scene.target_object == bpy.context.view_layer.objects.active)
     return result
 
 def make_active(obj):
@@ -19,7 +21,7 @@ def make_active(obj):
 
 def select_active(obj):
 
-    bpy.ops.object.select_all(action='DESELECT')
+    deselect_all()
     
     make_active(obj)
 
@@ -44,7 +46,6 @@ def bool_mod_and_apply(obj, bool_method, allow_delete = True):
         method = 'UNION'
     
     bool_mod.operation = method
-    #bool_mod.solver = 'CARVE'
     bool_mod.object = obj
 
     recalc_normals(obj.data)
@@ -64,14 +65,14 @@ def execute_boolean_op(context, target_obj, bool_method = 0):
     ''' 
     current_obj = context.object
     make_active(current_obj)
-    bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
+    to_object()
     bpy.ops.object.transform_apply(scale=True)
 
     make_active(target_obj)
-    bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
+    to_object()
     bpy.ops.object.transform_apply(scale=True)
   
     bool_mod_and_apply(current_obj, bool_method)
 
     make_active(target_obj)
-    bpy.ops.object.mode_set(mode='SCULPT', toggle=False)
+    to_sculpt()

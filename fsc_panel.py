@@ -21,8 +21,14 @@ class FSC_PT_Panel(Panel):
         row = layout.row()
         row.operator('object.fsc_bool_union', text='Union')
 
-        # row = layout.row()
-        # row.prop(context.scene, "export_folder", text="")
+        row = layout.row()
+        row.label(text="Extract thickness:")
+        
+        row = layout.row()
+        layout.prop(context.scene, "extract_thickness", text="")
+
+        row = layout.row()
+        row.operator('object.fsc_ot_mask_extract', text="Extract Mask")
 
         # row = layout.row()
         # row.prop(context.scene, "center_transform", text="Center transform")
