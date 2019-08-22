@@ -41,11 +41,3 @@ class FSC_PT_Panel(Panel):
 
         row = layout.row()
         row.operator('object.fsc_remesh', text="Remesh")
-        # row = layout.row()
-        # row.prop(context.scene, "center_transform", text="Center transform")
-
-        # row = layout.row()
-        # row.operator('object.bex_ot_operator', text='Export')
-
-        # row = layout.row()
-        # row.operator('object.bex_ot_openfolder', text='Open export folder')

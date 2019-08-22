@@ -28,8 +28,6 @@ class FSC_OT_Mask_Extract_Operator(Operator):
         # separate a new object from the selection
         bpy.ops.mesh.separate(type='SELECTED')
         
-        # to_object()
-
         # get the new created/separated object
         new_objs = [obj for obj in bpy.context.selected_objects if obj != bpy.context.object]
         new_obj = new_objs[0]

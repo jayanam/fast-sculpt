@@ -26,9 +26,6 @@ def get_active():
 
 def make_active(obj):
 
-    # API change 2.8: obj.select = True
     obj.select_set(state=True)
-    
-    # API change 2.8: bpy.context.scene.objects.active = obj
     bpy.context.view_layer.objects.active = obj   
 

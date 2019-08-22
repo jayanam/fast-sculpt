@@ -11,14 +11,6 @@ def check_cutter_selected(context):
     result = result and not (bpy.context.scene.target_object == bpy.context.view_layer.objects.active)
     return result
 
-def make_active(obj):
-
-    # API change 2.8: obj.select = True
-    obj.select_set(state=True)
-    
-    # API change 2.8: bpy.context.scene.objects.active = obj
-    bpy.context.view_layer.objects.active = obj    
-
 def select_active(obj):
 
     deselect_all()
@@ -58,11 +50,6 @@ def bool_mod_and_apply(obj, bool_method, allow_delete = True):
 
 def execute_boolean_op(context, target_obj, bool_method = 0):
     
-    '''
-    function for bool operation
-    @target_obj : target object of the bool operation
-    @bool_method : 0 = difference, 1 = union, 2 = intersect  
-    ''' 
     current_obj = context.object
     make_active(current_obj)
     to_object()
