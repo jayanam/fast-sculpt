@@ -43,7 +43,7 @@ class FSC_OT_Mask_Extract_Operator(Operator):
         solid_mod = new_obj.modifiers.new(type="SOLIDIFY", name="FSC_SOLIDIFY")
 
         # TODO: Make this configurable
-        solid_mod.offset = 0.001
+        solid_mod.offset = -0.001
         solid_mod.use_even_offset = True
         solid_mod.use_quality_normals = True
 
