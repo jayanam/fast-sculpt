@@ -3,7 +3,7 @@ bl_info = {
     "author" : "jayanam",
     "description" : "Sculpting tools for Blender 2.8",
     "blender" : (2, 80, 0),
-    "version" : (0, 3, 1, 0),
+    "version" : (0, 3, 2, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -24,10 +24,19 @@ bpy.types.Scene.extract_thickness = bpy.props.FloatProperty( name="Extract thick
                                       description="Thickness of the extracted mesh",
                                       default = 0.1)
 
+bpy.types.Scene.extract_offset = bpy.props.FloatProperty( name="Extract offset", 
+                                      description="Offset of the extracted mesh",
+                                      default = 0.0)
+
 bpy.types.Scene.remesh_voxel_size = bpy.props.FloatProperty( name="Remesh voxel size", 
                                       description="Voxel size of remesh",
-                                      default = 0.01,
+                                      default = 0.01, 
+                                      min = 0.0,
                                       precision=4)
+
+bpy.types.Scene.remesh_smooth_normals  = BoolProperty(name="Smooth normals", 
+                                      description="Smooth normals after remesh",
+                                      default = False)
 
 bpy.types.Scene.remesh_after_extract  = BoolProperty(name="Remesh after extract", 
                                       description="Remesh the mesh after mask extraction",

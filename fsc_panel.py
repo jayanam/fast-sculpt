@@ -13,31 +13,37 @@ class FSC_PT_Panel(Panel):
         scene = context.scene
 
         row = layout.row()
-        row.label(text="Target object:")
+        row.label(text="Bool Target:")
 
         row = layout.row()
         layout.prop_search(context.scene, "target_object", context.scene, "objects", text="Target")
 
         row = layout.row()
-        row.operator('object.fsc_bool_union', text='Union')
+        layout.prop(context.scene, "remesh_after_union", text="Remesh after union")
 
         row = layout.row()
-        row.label(text="Extract thickness:")
+        row.operator('object.fsc_bool_union', text='Bool Union')
+
+        row = layout.row()
+        row.label(text="Extraction:")
         
         row = layout.row()
-        layout.prop(context.scene, "extract_thickness", text="")
+        layout.prop(context.scene, "extract_thickness", text="Thickness")
 
         row = layout.row()
-        row.operator('object.fsc_ot_mask_extract', text="Extract Mask")
-
-        row = layout.row()
-        layout.prop(context.scene, "remesh_after_union", text="Remesh after union")
+        layout.prop(context.scene, "extract_offset", text="Offset")
 
         row = layout.row()
         layout.prop(context.scene, "remesh_after_extract", text="Remesh after extract")
 
         row = layout.row()
+        row.operator('object.fsc_ot_mask_extract', text="Extract Mask")
+
+        row = layout.row()
         layout.prop(context.scene, "remesh_voxel_size", text="Remesh-size")
+
+        row = layout.row()
+        layout.prop(context.scene, "remesh_smooth_normals", text="Smooth normals")
 
         row = layout.row()
         row.operator('object.fsc_remesh', text="Remesh")

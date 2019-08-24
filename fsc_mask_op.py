@@ -41,9 +41,7 @@ class FSC_OT_Mask_Extract_Operator(Operator):
         make_active(new_obj)
 
         solid_mod = new_obj.modifiers.new(type="SOLIDIFY", name="FSC_SOLIDIFY")
-
-        # TODO: Make this configurable
-        solid_mod.offset = -0.001
+        solid_mod.offset = context.scene.extract_offset
         solid_mod.use_even_offset = True
         solid_mod.use_quality_normals = True
 
@@ -54,6 +52,7 @@ class FSC_OT_Mask_Extract_Operator(Operator):
         to_sculpt()
 
         if context.scene.remesh_after_extract:
+            bpy.context.object.data.remesh_smooth_normals = context.scene.remesh_smooth_normals
             bpy.context.object.data.remesh_voxel_size = context.scene.remesh_voxel_size
             bpy.ops.object.voxel_remesh()
 
