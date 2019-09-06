@@ -1,6 +1,7 @@
 import bpy
 from bpy.types import Panel
 
+
 class FSC_PT_Panel(Panel):
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
@@ -8,42 +9,70 @@ class FSC_PT_Panel(Panel):
     bl_category = "Fast Sculpt"
     
     def draw(self, context):
-        
+        pass
+
+class FSC_PT_Bool_Objects_Panel(FSC_PT_Panel, Panel):
+    bl_parent_id = "FSC_PT_Panel"
+    bl_label = "Bool objects"
+    
+    def draw(self, context): 
+
         layout = self.layout
-        scene = context.scene
 
         row = layout.row()
-        row.label(text="Bool Target:")
-
-        row = layout.row()
-        layout.prop_search(context.scene, "target_object", context.scene, "objects", text="Target")
-
-        row = layout.row()
-        layout.prop(context.scene, "remesh_after_union", text="Remesh after union")
+        row.prop_search(context.scene, "target_object", context.scene, "objects", text="Target")
 
         row = layout.row()
         row.operator('object.fsc_bool_union', text='Bool Union')
 
+class FSC_PT_Add_Objects_Panel(FSC_PT_Panel, Panel):
+    bl_parent_id = "FSC_PT_Panel"
+    bl_label = "Add objects"
+    
+    def draw(self, context): 
+
+        layout = self.layout
         row = layout.row()
-        row.label(text="Extraction:")
-        
+        row.prop(context.scene, "add_object_type", text="Type")
+
+class FSC_PT_Extract_Mask_Panel(FSC_PT_Panel, Panel):
+    bl_parent_id = "FSC_PT_Panel"
+    bl_label = "Extract objects"
+    
+    def draw(self, context): 
+
+        layout = self.layout
         row = layout.row()
-        layout.prop(context.scene, "extract_thickness", text="Thickness")
 
         row = layout.row()
-        layout.prop(context.scene, "extract_offset", text="Offset")
+        row.prop(context.scene, "extract_thickness", text="Thickness")
 
         row = layout.row()
-        layout.prop(context.scene, "remesh_after_extract", text="Remesh after extract")
+        row.prop(context.scene, "extract_offset", text="Offset")
 
         row = layout.row()
         row.operator('object.fsc_ot_mask_extract', text="Extract Mask")
 
-        row = layout.row()
-        layout.prop(context.scene, "remesh_voxel_size", text="Remesh-size")
+
+class FSC_PT_Remesh_Panel(FSC_PT_Panel, Panel):
+    bl_parent_id = "FSC_PT_Panel"
+    bl_label = "Remesh objects"
+    
+    def draw(self, context): 
+
+        layout = self.layout
 
         row = layout.row()
-        layout.prop(context.scene, "remesh_smooth_normals", text="Smooth normals")
+        row.prop(context.scene, "remesh_after_union", text="Remesh after union")
+
+        row = layout.row()
+        row.prop(context.scene, "remesh_after_extract", text="Remesh after extract")
+
+        row = layout.row()
+        row.prop(context.scene, "remesh_smooth_normals", text="Smooth normals")
+
+        row = layout.row()
+        row.prop(context.scene, "remesh_voxel_size", text="Remesh-size")
 
         row = layout.row()
         row.operator('object.fsc_remesh', text="Remesh")
