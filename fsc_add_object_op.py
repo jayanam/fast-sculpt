@@ -38,7 +38,7 @@ class FSC_OT_Add_Oject_Operator(Operator):
             loc = loc_hit
 
         obj_type = context.scene.add_object_type
-
+      
         # TODO: Add more init options here
         if obj_type == "Sphere":
             bpy.ops.mesh.primitive_uv_sphere_add(radius=1, enter_editmode=False, location=loc)
@@ -48,6 +48,23 @@ class FSC_OT_Add_Oject_Operator(Operator):
             bpy.ops.mesh.primitive_cylinder_add(radius=1, depth=2, enter_editmode=False, location=loc)
         elif obj_type == "Torus":
             bpy.ops.mesh.primitive_torus_add(align='WORLD', location=loc, rotation=(0, 0, 0), major_radius=1, minor_radius=0.25, abso_major_rad=1.25, abso_minor_rad=0.75)
+        
+        elif obj_type == "Scene":
+            custom_obj = context.scene.add_scene_object
+            if custom_obj:
+
+                deselect_all()
+                make_active(custom_obj)
+
+                bpy.ops.object.duplicate(linked=True)
+                clone_custom = bpy.context.view_layer.objects.active
+                bpy.ops.object.make_single_user(object=True, obdata=True)
+
+                clone_custom.location = loc
+
+                deselect_all()
+                make_active(clone_custom)
+
 
         to_sculpt()
  

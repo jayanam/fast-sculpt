@@ -3,7 +3,7 @@ bl_info = {
     "author" : "jayanam",
     "description" : "Sculpting tools for Blender 2.8",
     "blender" : (2, 80, 0),
-    "version" : (0, 4, 0, 1),
+    "version" : (0, 4, 1, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -50,12 +50,15 @@ bpy.types.Scene.remesh_after_union  = BoolProperty(name="Remesh after union",
 add_object_types = [ ("Sphere",    "Sphere",   "", 0),
                      ("Cube",      "Cube",     "", 1),
                      ("Cylinder",  "Cylinder", "", 2),
-                     ("Torus",     "Torus",    "", 3)
+                     ("Torus",     "Torus",    "", 3),
+                     ("Scene",     "Scene",    "", 4)
                   ]
 
 bpy.types.Scene.add_object_type = bpy.props.EnumProperty(items=add_object_types, 
                                                         name="Add Object",
                                                         default="Sphere")
+
+bpy.types.Scene.add_scene_object = PointerProperty(type=bpy.types.Object)
 
 addon_keymaps = []
 
