@@ -3,7 +3,7 @@ bl_info = {
     "author" : "jayanam",
     "description" : "Sculpting tools for Blender 2.8",
     "blender" : (2, 80, 0),
-    "version" : (0, 4, 1, 0),
+    "version" : (0, 5, 0, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -16,10 +16,13 @@ from . fsc_panel import *
 from . fsc_bool_op import *
 from . fsc_mask_op import *
 from . fsc_remesh_op import *
+from . fsc_retopo_op import *
 from . fsc_add_object_op import *
 
 # Scene properties
 bpy.types.Scene.target_object = PointerProperty(type=bpy.types.Object)
+
+bpy.types.Scene.retopo_object = PointerProperty(type=bpy.types.Object)
 
 bpy.types.Scene.extract_thickness = bpy.props.FloatProperty( name="Extract thickness", 
                                       description="Thickness of the extracted mesh",
@@ -63,7 +66,8 @@ bpy.types.Scene.add_scene_object = PointerProperty(type=bpy.types.Object)
 addon_keymaps = []
 
 classes = ( FSC_PT_Panel, FSC_PT_Bool_Objects_Panel, FSC_PT_Add_Objects_Panel, FSC_PT_Extract_Mask_Panel, 
-            FSC_PT_Remesh_Panel, FSC_BoolOperator_Union, FSC_OT_Mask_Extract_Operator, FSC_Remesh_Operator, FSC_OT_Add_Oject_Operator )
+            FSC_PT_Remesh_Panel, FSC_PT_Retopo_Panel, FSC_OT_BoolOperator_Union, FSC_OT_Mask_Extract_Operator, 
+            FSC_OT_Remesh_Operator, FSC_OT_Add_Oject_Operator, FSC_OT_Retopo_Operator )
 
 def register():
     for c in classes:

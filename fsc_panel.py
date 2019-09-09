@@ -78,3 +78,17 @@ class FSC_PT_Remesh_Panel(FSC_PT_Panel, Panel):
 
         row = layout.row()
         row.operator('object.fsc_remesh', text="Remesh")
+
+
+class FSC_PT_Retopo_Panel(FSC_PT_Panel, Panel):
+    bl_parent_id = "FSC_PT_Panel"
+    bl_label = "Retopo objects"
+    
+    def draw(self, context): 
+
+        layout = self.layout
+        row = layout.row()
+        row.prop(context.scene, "retopo_object", text="Target")
+
+        row = layout.row()
+        row.operator('object.fsc_retopo', text="Add retopo mesh")

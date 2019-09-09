@@ -3,7 +3,7 @@ from bpy.types import Operator
 
 from . fsc_bool_util import *
 
-class FSC_BoolOperator_Union(Operator):
+class FSC_OT_BoolOperator_Union(Operator):
     bl_idname = "object.fsc_bool_union"
     bl_label = "Bool union"
     bl_description = "Union for 2 selected objects" 
