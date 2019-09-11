@@ -35,6 +35,7 @@ class FSC_OT_Retopo_Operator(Operator):
       context.scene.tool_settings.use_snap_project = True
       context.scene.tool_settings.use_snap = True
 
+      # TODO: Add it to location of retopo object
       bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, location=(0, 0, 0))
 
       plane = bpy.context.view_layer.objects.active
