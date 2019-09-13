@@ -38,6 +38,9 @@ class FSC_PT_Add_Objects_Panel(FSC_PT_Panel, Panel):
         row = layout.row()
         row.prop(context.scene, "add_scene_object", text="Scene")
 
+        row = layout.row()
+        row.prop(context.scene, "align_to_face", text="Align to face orientation")
+
 class FSC_PT_Extract_Mask_Panel(FSC_PT_Panel, Panel):
     bl_parent_id = "FSC_PT_Panel"
     bl_label = "Extract objects"

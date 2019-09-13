@@ -3,7 +3,7 @@ bl_info = {
     "author" : "jayanam",
     "description" : "Sculpting tools for Blender 2.8",
     "blender" : (2, 80, 0),
-    "version" : (0, 5, 1, 0),
+    "version" : (0, 5, 2, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -38,6 +38,10 @@ bpy.types.Scene.remesh_voxel_size = bpy.props.FloatProperty( name="Remesh voxel 
                                       min = 0.0,
                                       precision=4)
 
+bpy.types.Scene.align_to_face  = BoolProperty(name="Align to face", 
+                                      description="Align to face orientation",
+                                      default = True)
+
 bpy.types.Scene.remesh_smooth_normals  = BoolProperty(name="Smooth normals", 
                                       description="Smooth normals after remesh",
                                       default = False)
@@ -54,7 +58,10 @@ add_object_types = [ ("Sphere",    "Sphere",   "", 0),
                      ("Cube",      "Cube",     "", 1),
                      ("Cylinder",  "Cylinder", "", 2),
                      ("Torus",     "Torus",    "", 3),
-                     ("Scene",     "Scene",    "", 4)
+                     ("Cone",      "Cone",     "", 4),
+                     ("Icosphere", "Icosphere","", 5),
+                     ("Scene",     "Scene",    "", 6),
+                    
                   ]
 
 bpy.types.Scene.add_object_type = bpy.props.EnumProperty(items=add_object_types, 
@@ -77,7 +84,7 @@ def register():
     kc = bpy.context.window_manager.keyconfigs.addon
     km = kc.keymaps.new(name='3D View', space_type='VIEW_3D')
 
-    kmi = km.keymap_items.new("object.fsc_add_object", 'A', 'PRESS', shift=True, ctrl=False)
+    kmi = km.keymap_items.new("object.fsc_add_object", 'A', 'PRESS', shift=True, ctrl=True)
     addon_keymaps.append((km, kmi))
 
 def unregister():

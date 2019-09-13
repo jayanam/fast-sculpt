@@ -28,17 +28,19 @@ class FSC_OT_Add_Oject_Operator(Operator):
         region = context.region
         region3D = context.space_data.region_3d
 
-        # Get intersection and create objects at this location if possible
         view_vector = view3d_utils.region_2d_to_vector_3d(region,   region3D, mouse_pos)
         origin      = view3d_utils.region_2d_to_origin_3d(region,   region3D, mouse_pos)
         loc         = view3d_utils.region_2d_to_location_3d(region, region3D, mouse_pos, view_vector)
         rot         = (0,0,0)  
 
+        # Get intersection and create objects at this location if possible
         hit, loc_hit, norm, face, *_ = scene.ray_cast(context.view_layer, origin, view_vector)
         if hit:
             loc = loc_hit
             z = Vector((0,0,1))
-            rot = z.rotation_difference( norm ).to_euler()
+            
+            if context.scene.align_to_face:
+                rot = z.rotation_difference( norm ).to_euler()
 
         obj_type = context.scene.add_object_type
       
@@ -51,7 +53,11 @@ class FSC_OT_Add_Oject_Operator(Operator):
             bpy.ops.mesh.primitive_cylinder_add(radius=1, depth=2, enter_editmode=False, location=loc, rotation=rot)
         elif obj_type == "Torus":
             bpy.ops.mesh.primitive_torus_add(align='WORLD', location=loc, rotation=rot, major_radius=1, minor_radius=0.25, abso_major_rad=1.25, abso_minor_rad=0.75)
-        
+        elif obj_type == "Cone":
+            bpy.ops.mesh.primitive_cone_add(radius1=1, radius2=0, depth=2, enter_editmode=False, location=loc, rotation=rot)
+        elif obj_type == "Icosphere":
+            bpy.ops.mesh.primitive_ico_sphere_add(radius=1, enter_editmode=False, location=loc, rotation=rot)
+ 
         elif obj_type == "Scene":
             custom_obj = context.scene.add_scene_object
             if custom_obj:
