@@ -3,7 +3,7 @@ bl_info = {
     "author" : "jayanam",
     "description" : "Sculpting tools for Blender 2.8",
     "blender" : (2, 80, 0),
-    "version" : (0, 5, 2, 0),
+    "version" : (0, 6, 1, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -18,6 +18,10 @@ from . fsc_mask_op import *
 from . fsc_remesh_op import *
 from . fsc_retopo_op import *
 from . fsc_add_object_op import *
+
+# Global properties
+bpy.types.WindowManager.in_add_mode = BoolProperty(name="Add Mode",
+                                        default = False)
 
 # Scene properties
 bpy.types.Scene.target_object = PointerProperty(type=bpy.types.Object)
@@ -55,18 +59,28 @@ bpy.types.Scene.remesh_after_union  = BoolProperty(name="Remesh after union",
                                       default = True)
 
 add_object_types = [ ("Sphere",    "Sphere",   "", 0),
-                     ("Cube",      "Cube",     "", 1),
-                     ("Cylinder",  "Cylinder", "", 2),
-                     ("Torus",     "Torus",    "", 3),
-                     ("Cone",      "Cone",     "", 4),
-                     ("Icosphere", "Icosphere","", 5),
-                     ("Scene",     "Scene",    "", 6),
-                    
+                     ("Plane",     "Plane",    "", 1),
+                     ("Cube",      "Cube",     "", 2),
+                     ("Cylinder",  "Cylinder", "", 3),
+                     ("Torus",     "Torus",    "", 4),
+                     ("Cone",      "Cone",     "", 5),
+                     ("Icosphere", "Icosphere","", 6),
+                     ("Scene",     "Scene",    "", 7),      
+                  ]
+
+add_object_mirror = [("None",    "None",  "", 0),
+                     ("X",       "X",     "", 1),
+                     ("Y",       "Y",     "", 2),
+                     ("Z",       "Z",     "", 3)    
                   ]
 
 bpy.types.Scene.add_object_type = bpy.props.EnumProperty(items=add_object_types, 
                                                         name="Add Object",
                                                         default="Sphere")
+
+bpy.types.Scene.add_object_mirror = bpy.props.EnumProperty(items=add_object_mirror, 
+                                                        name="Add Object Mirror",
+                                                        default="None")                                                
 
 bpy.types.Scene.add_scene_object = PointerProperty(type=bpy.types.Object)
 

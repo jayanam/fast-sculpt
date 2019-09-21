@@ -1,4 +1,6 @@
 import bpy
+import blf
+
 from bpy.types import Operator
 
 from mathutils import Vector
@@ -13,18 +15,91 @@ class FSC_OT_Add_Oject_Operator(Operator):
     bl_description = "Add object in sculpt mode" 
     bl_options = {'REGISTER', 'UNDO'} 
 
+    def __init__(self):
+        self.draw_handle_2d = None
+
     def invoke(self, context, event):
+        args = (self, context)
+        context.window_manager.in_add_mode = True
+        self.register_handlers(args, context)
+        context.window_manager.modal_handler_add(self)
+        return {'RUNNING_MODAL'}
 
-        scene = context.scene
-        active_object = bpy.context.view_layer.objects.active
+    def register_handlers(self, args, context):
+        self.draw_handle_2d = bpy.types.SpaceView3D.draw_handler_add(
+        self.draw_callback_2d, args, "WINDOW", "POST_PIXEL")
+        self.draw_event = context.window_manager.event_timer_add(0.1, window=context.window)
 
-        if active_object is None or active_object.mode != "SCULPT":
+    def unregister_handlers(self, context):
+        context.window_manager.in_add_mode = False
+        context.window_manager.event_timer_remove(self.draw_event)
+        bpy.types.SpaceView3D.draw_handler_remove(self.draw_handle_2d, "WINDOW")
+        
+        self.draw_handle_2d = None
+        self.draw_event  = None
+
+    def draw_callback_2d(self, op, context):
+
+        # Draw text for add object mode
+        header = "- Add Object Mode (Type: " + context.scene.add_object_type + ") -"
+        text = "Ctrl + Left Click = Add | Esc = Exit"
+
+        blf.color(1, 1, 1, 1, 1)
+        blf.size(0, 20, 72)
+        blf.size(1, 16, 72)
+
+        region = context.region
+        xt = int(region.width / 2.0)
+
+        blf.position(0, xt - blf.dimensions(0, header)[0] / 2, 50 , 0)
+        blf.draw(0, header)
+
+        blf.position(1, xt - blf.dimensions(1, text)[0] / 2, 20 , 0)
+        blf.draw(1, text)
+
+
+    @classmethod
+    def poll(cls, context): 
+
+        if context.window_manager.in_add_mode:
+            return False
+
+        return True
+
+    def finish(self):
+        context.window_manager.in_add_mode = False
+        self.unregister_handlers(bpy.context)
+        return {"FINISHED"}
+
+    def modal(self, context, event):
+        if context.area:
+            context.area.tag_redraw()
+
+        if event.type == "ESC" and event.value == "PRESS":
+            context.window_manager.in_add_mode = False
+            self.unregister_handlers(context)
             return {'FINISHED'}
 
+        if event.value == "PRESS" and event.type == "LEFTMOUSE" and event.ctrl:
+            mouse_pos = (event.mouse_region_x, event.mouse_region_y)
+            self.add_object(context, mouse_pos)
+
+        return {'PASS_THROUGH'}
+
+    def get_axis_no(self, str_axis):
+        if str_axis == "X":
+            return 0
+        elif str_axis == "Y":
+            return 1
+        
+        return 2
+
+
+    def add_object(self, context, mouse_pos):
+        
+        scene = context.scene
         to_object()
         
-        mouse_pos = [event.mouse_region_x, event.mouse_region_y]
-
         region = context.region
         region3D = context.space_data.region_3d
 
@@ -47,6 +122,8 @@ class FSC_OT_Add_Oject_Operator(Operator):
         # TODO: Add more init options here
         if obj_type == "Sphere":
             bpy.ops.mesh.primitive_uv_sphere_add(radius=1, enter_editmode=False, location=loc)
+        if obj_type == "Plane":
+            bpy.ops.mesh.primitive_plane_add(size=2, enter_editmode=False, location=loc, rotation=rot)
         elif obj_type == "Cube":  
             bpy.ops.mesh.primitive_cube_add(enter_editmode=False, location=loc, rotation=rot)
         elif obj_type == "Cylinder":
@@ -75,7 +152,23 @@ class FSC_OT_Add_Oject_Operator(Operator):
                 deselect_all()
                 make_active(clone_custom)
 
+        # Check if we need to add mirror modifier
+        mirror = context.scene.add_object_mirror
+
+        if mirror != "None":
+            cursor_location = bpy.context.scene.cursor.location.copy()
+                    
+            bpy.context.scene.cursor.location = (0.0, 0.0, 0.0)
+            
+            bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
+            
+            active_obj = bpy.context.active_object
+    
+            mirror_mod = active_obj.modifiers.new(type="MIRROR", name="FSC_MIRROR")
+            mirror_mod.use_axis[0] = False
+            mirror_mod.use_axis[self.get_axis_no(mirror)] = True
+
+            bpy.context.scene.cursor.location = cursor_location
 
         to_sculpt()
- 
-        return {'FINISHED'}
+

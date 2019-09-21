@@ -41,6 +41,13 @@ class FSC_PT_Add_Objects_Panel(FSC_PT_Panel, Panel):
         row = layout.row()
         row.prop(context.scene, "align_to_face", text="Align to face orientation")
 
+        layout = self.layout
+        row = layout.row()
+        row.prop(context.scene, "add_object_mirror", text="Mirror")
+
+        row = layout.row()
+        row.operator('object.fsc_add_object', text="Add object mode")
+
 class FSC_PT_Extract_Mask_Panel(FSC_PT_Panel, Panel):
     bl_parent_id = "FSC_PT_Panel"
     bl_label = "Extract objects"
