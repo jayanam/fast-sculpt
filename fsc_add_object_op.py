@@ -163,6 +163,8 @@ class FSC_OT_Add_Oject_Operator(Operator):
             bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
             
             active_obj = bpy.context.active_object
+
+            bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
     
             mirror_mod = active_obj.modifiers.new(type="MIRROR", name="FSC_MIRROR")
             mirror_mod.use_axis[0] = False
