@@ -3,7 +3,7 @@ bl_info = {
     "author" : "jayanam",
     "description" : "Sculpting tools for Blender 2.8",
     "blender" : (2, 80, 0),
-    "version" : (0, 6, 2, 0),
+    "version" : (0, 6, 3, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -87,7 +87,8 @@ bpy.types.Scene.add_scene_object = PointerProperty(type=bpy.types.Object)
 addon_keymaps = []
 
 classes = ( FSC_PT_Panel, FSC_PT_Bool_Objects_Panel, FSC_PT_Add_Objects_Panel, FSC_PT_Extract_Mask_Panel, 
-            FSC_PT_Remesh_Panel, FSC_PT_Retopo_Panel, FSC_OT_BoolOperator_Union, FSC_OT_Mask_Extract_Operator, 
+            FSC_PT_Remesh_Panel, FSC_PT_Retopo_Panel, FSC_OT_BoolOperator_Union, 
+            FSC_OT_BoolOperator_Difference, FSC_OT_Mask_Extract_Operator, 
             FSC_OT_Remesh_Operator, FSC_OT_Add_Oject_Operator, FSC_OT_Retopo_Operator )
 
 def register():

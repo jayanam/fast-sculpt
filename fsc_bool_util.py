@@ -26,7 +26,7 @@ def recalc_normals(mesh):
     mesh.update()
     bm.free()
     
-def bool_mod_and_apply(obj, bool_method, allow_delete = True):
+def bool_mod_and_apply(obj, bool_method, delete_selected = True):
     
     active_obj = bpy.context.active_object
     
@@ -44,11 +44,12 @@ def bool_mod_and_apply(obj, bool_method, allow_delete = True):
     
     bpy.ops.object.modifier_apply(modifier=bool_mod.name)
 
-    select_active(obj)
-    bpy.ops.object.delete()
+    if delete_selected:
+        select_active(obj)
+        bpy.ops.object.delete()
 
 
-def execute_boolean_op(context, target_obj, bool_method = 0):
+def execute_boolean_op(context, target_obj, bool_method = 0, delete_selected = True):
     
     current_obj = context.object
     make_active(current_obj)
@@ -59,7 +60,7 @@ def execute_boolean_op(context, target_obj, bool_method = 0):
     to_object()
     bpy.ops.object.transform_apply(scale=True)
   
-    bool_mod_and_apply(current_obj, bool_method)
+    bool_mod_and_apply(current_obj, bool_method, delete_selected)
 
     make_active(target_obj)
     to_sculpt()
@@ -67,3 +68,8 @@ def execute_boolean_op(context, target_obj, bool_method = 0):
     if context.scene.remesh_after_union:
         bpy.context.object.data.remesh_voxel_size = context.scene.remesh_voxel_size
         bpy.ops.object.voxel_remesh()
+     
+    # difference operation
+    if bool_method == 0:
+        to_object()
+        select_active(current_obj)
