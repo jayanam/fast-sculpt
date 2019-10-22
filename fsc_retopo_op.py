@@ -41,7 +41,7 @@ class FSC_OT_Retopo_Operator(Operator):
       plane = bpy.context.view_layer.objects.active
       mod_sw = plane.modifiers.new(type="SHRINKWRAP", name="FSC_SHRINKWRAP")
       mod_sw.target = context.scene.retopo_object
-      context.object.show_in_front = True
+      # context.object.show_in_front = True
       
       to_edit()
 
