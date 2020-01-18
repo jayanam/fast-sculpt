@@ -84,10 +84,16 @@ class FSC_PT_Remesh_Panel(FSC_PT_Panel, Panel):
         row.prop(context.scene, "remesh_after_extract", text="Remesh after extract")
 
         row = layout.row()
+        row.prop(context.scene, "remesh_fix_poles", text="Fix poles")
+
+        row = layout.row()
         row.prop(context.scene, "remesh_smooth_normals", text="Smooth normals")
 
         row = layout.row()
-        row.prop(context.scene, "remesh_voxel_size", text="Remesh-size")
+        row.prop(context.scene, "remesh_preserve_volume", text="Preserve volume")
+
+        row = layout.row()
+        row.prop(context.scene, "remesh_voxel_size", text="Voxel size")
 
         row = layout.row()
         row.operator('object.fsc_remesh', text="Remesh")

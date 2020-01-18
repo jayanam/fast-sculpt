@@ -11,7 +11,9 @@ class FSC_OT_Remesh_Operator(Operator):
 
     def invoke(self, context, event):
 
-        bpy.context.object.data.remesh_smooth_normals = context.scene.remesh_smooth_normals
+        bpy.context.object.data.use_remesh_preserve_volume = context.scene.remesh_preserve_volume
+        bpy.context.object.data.use_remesh_smooth_normals = context.scene.remesh_smooth_normals
+        bpy.context.object.data.use_remesh_fix_poles = context.scene.remesh_fix_poles
         bpy.context.object.data.remesh_voxel_size = context.scene.remesh_voxel_size
         bpy.ops.object.voxel_remesh()
  

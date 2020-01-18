@@ -35,13 +35,13 @@ class FSC_OT_Retopo_Operator(Operator):
       context.scene.tool_settings.use_snap_project = True
       context.scene.tool_settings.use_snap = True
 
-      # TODO: Add it to location of retopo object
+      # TODO: Add it to location of retopo object?
       bpy.ops.mesh.primitive_plane_add(size=1, enter_editmode=False, location=(0, 0, 0))
 
       plane = bpy.context.view_layer.objects.active
       mod_sw = plane.modifiers.new(type="SHRINKWRAP", name="FSC_SHRINKWRAP")
       mod_sw.target = context.scene.retopo_object
-      # context.object.show_in_front = True
+      #context.object.show_in_front = True
       
       to_edit()
 
