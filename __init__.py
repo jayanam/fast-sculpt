@@ -3,7 +3,7 @@ bl_info = {
     "author" : "jayanam",
     "description" : "Sculpting tools for Blender 2.8",
     "blender" : (2, 80, 0),
-    "version" : (0, 7, 0, 1),
+    "version" : (0, 7, 0, 2),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"

@@ -3,6 +3,7 @@ import bpy
 from bpy.types import Operator
 
 from . fsc_select_mode_utils import *
+from . fsc_bool_util  import *
 
 class FSC_OT_Mask_Extract_Operator(Operator):
     bl_idname = "object.fsc_ot_mask_extract"
@@ -52,11 +53,7 @@ class FSC_OT_Mask_Extract_Operator(Operator):
         to_sculpt()
 
         if context.scene.remesh_after_extract:
-            bpy.context.object.data.use_remesh_preserve_volume = context.scene.remesh_preserve_volume
-            bpy.context.object.data.use_remesh_smooth_normals = context.scene.remesh_smooth_normals
-            bpy.context.object.data.use_remesh_fix_poles = context.scene.remesh_fix_poles
-            bpy.ops.object.voxel_remesh()
-
+            execute_remesh(context)
 
         self.report({'INFO'}, "Mask extracted")
         return {'FINISHED'}
