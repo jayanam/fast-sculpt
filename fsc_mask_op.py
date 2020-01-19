@@ -52,8 +52,9 @@ class FSC_OT_Mask_Extract_Operator(Operator):
         to_sculpt()
 
         if context.scene.remesh_after_extract:
-            bpy.context.object.data.remesh_smooth_normals = context.scene.remesh_smooth_normals
-            bpy.context.object.data.remesh_voxel_size = context.scene.remesh_voxel_size
+            bpy.context.object.data.use_remesh_preserve_volume = context.scene.remesh_preserve_volume
+            bpy.context.object.data.use_remesh_smooth_normals = context.scene.remesh_smooth_normals
+            bpy.context.object.data.use_remesh_fix_poles = context.scene.remesh_fix_poles
             bpy.ops.object.voxel_remesh()
 
 
