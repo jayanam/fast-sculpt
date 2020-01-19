@@ -61,6 +61,9 @@ class FSC_OT_Add_Oject_Operator(Operator):
     @classmethod
     def poll(cls, context): 
 
+        if context.object is None:
+            return False
+
         if context.window_manager.in_add_mode:
             return False
 
@@ -152,25 +155,28 @@ class FSC_OT_Add_Oject_Operator(Operator):
                 deselect_all()
                 make_active(clone_custom)
 
+                bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+
+
         # Check if we need to add mirror modifier
         mirror = context.scene.add_object_mirror
 
         if mirror != "None":
-            cursor_location = bpy.context.scene.cursor.location.copy()
-                    
+
+            active_obj = bpy.context.active_object
+            old_loc = active_obj.location.copy()
+
             bpy.context.scene.cursor.location = (0.0, 0.0, 0.0)
-            
+
             bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
             
-            active_obj = bpy.context.active_object
-
             bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
     
             mirror_mod = active_obj.modifiers.new(type="MIRROR", name="FSC_MIRROR")
             mirror_mod.use_axis[0] = False
             mirror_mod.use_axis[self.get_axis_no(mirror)] = True
 
-            bpy.context.scene.cursor.location = cursor_location
+            # Set the pivot point back to the old position of the object
+            bpy.context.scene.cursor.location = old_loc
 
         to_sculpt()
-
