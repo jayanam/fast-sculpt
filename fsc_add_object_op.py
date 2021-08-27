@@ -112,7 +112,7 @@ class FSC_OT_Add_Oject_Operator(Operator):
         rot         = (0,0,0)  
 
         # Get intersection and create objects at this location if possible
-        hit, loc_hit, norm, face, *_ = scene.ray_cast(context.view_layer, origin, view_vector)
+        hit, loc_hit, norm, face, *_ = scene.ray_cast(context.view_layer.depsgraph, origin, view_vector)
         if hit:
             loc = loc_hit
             z = Vector((0,0,1))
